@@ -1,0 +1,18 @@
+{
+  "name": "FloorMap AI",
+  "short_name": "FloorMap AI",
+  "description": "Next-generation AI-powered floor plan annotation platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "landscape-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

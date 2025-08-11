@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-08-11 13:30:35",
+  "summary": {
+    "total": 5,
+    "successful": 0,
+    "failed": 5,
+    "success_rate": 0.0
+  },
+  "results": [
+    {
+      "name": "Pink Area - Store 1",
+      "success": false,
+      "error": "HTTP 500"
+    },
+    {
+      "name": "Blue Area - Store 2",
+      "success": false,
+      "error": "HTTP 500"
+    },
+    {
+      "name": "Green Area - Store 3",
+      "success": false,
+      "error": "HTTP 500"
+    },
+    {
+      "name": "Multi-point test",
+      "success": false,
+      "error": "HTTP 500"
+    },
+    {
+      "name": "Corner area",
+      "success": false,
+      "error": "HTTP 500"
+    }
+  ]
+}

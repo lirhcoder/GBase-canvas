@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive SAM Mall Annotator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 10px;
+        }
+
+        .header {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .image-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .controls-container {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .image-canvas {
+            border: 2px solid #ddd;
+            cursor: crosshair;
+            max-width: 100%;
+        }
+
+        .control-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .control-section:last-child {
+            border-bottom: none;
+        }
+
+        .control-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .mode-selection {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .mode-btn:hover {
+            border-color: #4CAF50;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #FF9800;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .point-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+
+        .point-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .point-item:last-child {
+            border-bottom: none;
+        }
+
+        .point-positive {
+            color: #4CAF50;
+        }
+
+        .point-negative {
+            color: #f44336;
+        }
+
+        .annotations-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .annotation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            background: #f9f9f9;
+        }
+
+        .annotation-content {
+            flex: 1;
+        }
+
+        .annotation-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .annotation-category {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .annotation-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 5px 8px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-info {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-small:hover {
+            opacity: 0.8;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .status-info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .canvas-overlay {
+            position: relative;
+        }
+
+        .temp-shape {
+            position: absolute;
+            border: 2px dashed #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            pointer-events: none;
+        }
+
+        .coordinate-display {
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+            background: #f0f0f0;
+            padding: 5px;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+        
+        /* 掩码选择器样式（参考官方演示） */
+        .mask-selector {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            border: 2px solid #2196F3;
+        }
+        
+        .mask-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .mask-option:hover {
+            background: #e3f2fd;
+            border-color: #2196F3;
+        }
+        
+        .mask-option.selected {
+            background: #2196F3;
+            color: white;
+            border-color: #1976D2;
+        }
+        
+        .mask-score, .mask-area {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .mask-option.selected .mask-score,
+        .mask-option.selected .mask-area {
+            color: #E3F2FD;
+        }
+        
+        .best-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏢 Interactive SAM Mall Annotator</h1>
+        <div class="instructions">
+            <strong>使用说明:</strong> 
+            选择标注模式 → 在图像上点击/拖拽 → 输入店铺信息 → 保存标注 → 导出数据
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="image-container">
+            <div class="canvas-overlay">
+                <canvas id="imageCanvas" class="image-canvas"></canvas>
+                <div id="tempShape" class="temp-shape" style="display: none;"></div>
+            </div>
+            <div class="coordinate-display" id="coordDisplay">
+                坐标: (0, 0) | 模式: 点击 | 操作: 左键=正样本, 右键=负样本
+            </div>
+        </div>
+
+        <div class="controls-container">
+            <div class="control-section">
+                <h3>🎯 标注模式</h3>
+                <div class="mode-selection">
+                    <button class="mode-btn active" data-mode="point">点击模式</button>
+                    <button class="mode-btn" data-mode="box">框选模式</button>
+                </div>
+                <div id="statusMessage" class="status status-info">
+                    选择点击模式开始标注
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>📍 当前输入</h3>
+                <div id="currentInputs">
+                    <div>点击图像添加标注点</div>
+                </div>
+                <div class="action-buttons" style="flex-direction: row; gap: 8px; margin-top: 10px;">
+                    <button class="btn btn-primary" onclick="simulateSAM()" id="generateBtn" disabled>
+                        🔮 生成掩码
+                    </button>
+                    <button class="btn btn-warning" onclick="clearCurrent()">
+                        🗑️ 清除
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>💾 保存标注</h3>
+                <div class="input-group">
+                    <label for="storeName">店铺名称:</label>
+                    <input type="text" id="storeName" placeholder="例如: シルパイ シルスチュアート">
+                </div>
+                <div class="input-group">
+                    <label for="storeCategory">店铺类别:</label>
+                    <select id="storeCategory">
+                        <option value="レディスファッション">レディスファッション</option>
+                        <option value="インテリア・生活雑貨">インテリア・生活雑貨</option>
+                        <option value="ファッション雑貨">ファッション雑貨</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" onclick="saveAnnotation()" id="saveBtn" disabled>
+                    💾 保存当前标注
+                </button>
+            </div>
+
+            <div class="control-section">
+                <h3>📋 已标注店铺 (<span id="annotationCount">0</span>)</h3>
+                <div id="annotationsList" class="annotations-list">
+                    <div style="color: #999; text-align: center; padding: 20px;">
+                        暂无标注数据
+                    </div>
+                </div>
+                <div class="action-buttons" style="flex-direction: row; gap: 8px; margin-top: 15px;">
+                    <button class="btn btn-primary" onclick="exportData()" id="exportBtn" disabled>
+                        📤 导出数据
+                    </button>
+                    <button class="btn btn-danger" onclick="clearAll()">
+                        🗑️ 清空所有
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>🎨 掩码交互控制</h3>
+                <div class="input-group">
+                    <label for="maskOpacity">掩码透明度:</label>
+                    <input type="range" id="maskOpacity" min="0.1" max="1.0" step="0.1" value="0.3" 
+                           onchange="updateMaskOpacity(this.value)">
+                    <span id="opacityValue">30%</span>
+                </div>
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" id="enableAnimation" checked onchange="toggleMaskAnimation(this.checked)">
+                        启用悬停动画效果
+                    </label>
+                </div>
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" id="showCoordinates" onchange="toggleCoordinateDisplay(this.checked)">
+                        显示坐标信息
+                    </label>
+                </div>
+                <button class="btn btn-primary" onclick="showAllStoreCoordinates()" style="width: 100%;">
+                    📍 显示所有店铺坐标
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="web_sam_annotator.js"></script>
+</body>
+</html>

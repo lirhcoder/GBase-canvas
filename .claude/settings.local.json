@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone:*)",
+      "Bash(pip install:*)",
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "Bash(taskkill:*)",
+      "Bash(timeout 5 curl -s http://localhost:5000/api/health)",
+      "WebFetch(domain:segment-anything.com)",
+      "Bash(timeout 10 curl -s http://localhost:5000/api/health)",
+      "Bash(echo:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(start http://localhost:5000)",
+      "Bash(start \"file://c:/development/segment-anything/test_auto_detection_web.html\")",
+      "WebFetch(domain:floormap.digital)",
+      "WebFetch(domain:platinumaps.jp)",
+      "WebFetch(domain:maps.tokyo-haneda.com)",
+      "WebFetch(domain:tokyo-haneda.com)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(cp:*)",
+      "Bash(mkdir:*)",
+      "Bash(timeout 10 curl -s http://localhost:3000/)",
+      "Bash(start http://localhost:3000)",
+      "Bash(timeout:*)",
+      "Bash(touch:*)",
+      "Bash(rm:*)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(start http://localhost:3002)",
+      "Bash(start http://localhost:3003)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)"
+    ],
+    "deny": []
+  }
+}

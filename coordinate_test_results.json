@@ -1,0 +1,140 @@
+{
+  "timestamp": "2025-08-11 14:40:30",
+  "test_summary": {
+    "total": 3,
+    "successful": 3,
+    "failed": 0,
+    "success_rate": 100.0
+  },
+  "detailed_results": [
+    {
+      "test_name": "Pink Area Test",
+      "input_point": [
+        310,
+        150
+      ],
+      "success": true,
+      "num_masks": 3,
+      "best_score": 0.922103226184845,
+      "mask_stats": {
+        "area": 14632,
+        "coverage": 2.5820113289452786,
+        "width": 610,
+        "height": 929
+      },
+      "center_point": {
+        "x": 325,
+        "y": 157
+      },
+      "boundary_points_count": 473,
+      "first_few_boundary_points": [
+        {
+          "x": 260,
+          "y": 99
+        },
+        {
+          "x": 261,
+          "y": 99
+        },
+        {
+          "x": 262,
+          "y": 99
+        },
+        {
+          "x": 263,
+          "y": 99
+        },
+        {
+          "x": 264,
+          "y": 99
+        }
+      ]
+    },
+    {
+      "test_name": "Blue Area Test",
+      "input_point": [
+        200,
+        300
+      ],
+      "success": true,
+      "num_masks": 3,
+      "best_score": 0.9301729202270508,
+      "mask_stats": {
+        "area": 211454,
+        "coverage": 37.3138753110166,
+        "width": 610,
+        "height": 929
+      },
+      "center_point": {
+        "x": 332,
+        "y": 391
+      },
+      "boundary_points_count": 5837,
+      "first_few_boundary_points": [
+        {
+          "x": 409,
+          "y": 91
+        },
+        {
+          "x": 410,
+          "y": 91
+        },
+        {
+          "x": 411,
+          "y": 91
+        },
+        {
+          "x": 412,
+          "y": 91
+        },
+        {
+          "x": 413,
+          "y": 91
+        }
+      ]
+    },
+    {
+      "test_name": "Green Area Test",
+      "input_point": [
+        400,
+        200
+      ],
+      "success": true,
+      "num_masks": 3,
+      "best_score": 0.9971082210540771,
+      "mask_stats": {
+        "area": 12916,
+        "coverage": 2.27920026822425,
+        "width": 610,
+        "height": 929
+      },
+      "center_point": {
+        "x": 440,
+        "y": 161
+      },
+      "boundary_points_count": 458,
+      "first_few_boundary_points": [
+        {
+          "x": 389,
+          "y": 100
+        },
+        {
+          "x": 390,
+          "y": 100
+        },
+        {
+          "x": 391,
+          "y": 100
+        },
+        {
+          "x": 392,
+          "y": 100
+        },
+        {
+          "x": 393,
+          "y": 100
+        }
+      ]
+    }
+  ]
+}

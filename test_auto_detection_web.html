@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Auto Detection</title>
+</head>
+<body>
+    <h1>店铺自动识别测试页面</h1>
+    <p>请访问主界面进行测试：<a href="http://localhost:5000" target="_blank">http://localhost:5000</a></p>
+    
+    <h2>测试步骤：</h2>
+    <ol>
+        <li>点击图片上的店铺区域（例如点击 シルパイ シルスチュアート 区域 - 坐标大约 (310, 150)）</li>
+        <li>点击"生成掩码"按钮</li>
+        <li>直接点击"保存当前标注"按钮（不要输入店铺名称）</li>
+        <li>系统应该自动识别出店铺名称并自动保存</li>
+    </ol>
+    
+    <h2>预期结果：</h2>
+    <ul>
+        <li>シルパイ シルスチュアート 区域 (x: 250-400, y: 100-200) → 应显示"シルパイ シルスチュアート"</li>
+        <li>ラグナムーン 区域 (x: 150-280, y: 200-280) → 应显示"ラグナムーン"</li>
+        <li>アニエスベー 区域 (x: 380-500, y: 100-200) → 应显示"アニエスベー"</li>
+    </ul>
+    
+    <p><strong>重要修复：</strong></p>
+    <ul>
+        <li>✅ 修复了 calculateMaskCenter 函数以正确处理 SAM API 掩码数据</li>
+        <li>✅ 修复了自动识别后直接保存的逻辑</li>
+        <li>✅ 添加了调试信息以便排查问题</li>
+    </ul>
+    
+    <script>
+    // 打开主界面
+    window.onload = function() {
+        setTimeout(() => {
+            window.open('http://localhost:5000', '_blank');
+        }, 1000);
+    }
+    </script>
+</body>
+</html>

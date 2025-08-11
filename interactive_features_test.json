@@ -1,0 +1,338 @@
+{
+  "test_metadata": {
+    "test_name": "Interactive Features Validation",
+    "timestamp": "2025-08-11 14:44:16",
+    "image_file": "lumine-yurakucho.png",
+    "total_stores": 3
+  },
+  "coordinate_extraction_results": [
+    {
+      "store_name": "シルパイ シルスチュアート",
+      "input_point": [
+        310,
+        150
+      ],
+      "center_point": {
+        "x": 325,
+        "y": 157
+      },
+      "bounding_box": {
+        "x": 256,
+        "y": 99,
+        "width": 131,
+        "height": 124
+      },
+      "mask_area": 14632,
+      "boundary_points_count": 518,
+      "confidence_score": 0.922103226184845,
+      "mask_coordinates_sample": [
+        {
+          "x": 260,
+          "y": 99
+        },
+        {
+          "x": 261,
+          "y": 99
+        },
+        {
+          "x": 262,
+          "y": 99
+        },
+        {
+          "x": 263,
+          "y": 99
+        },
+        {
+          "x": 264,
+          "y": 99
+        },
+        {
+          "x": 265,
+          "y": 99
+        },
+        {
+          "x": 266,
+          "y": 99
+        },
+        {
+          "x": 267,
+          "y": 99
+        },
+        {
+          "x": 268,
+          "y": 99
+        },
+        {
+          "x": 269,
+          "y": 99
+        }
+      ],
+      "boundary_points_sample": [
+        {
+          "x": 260,
+          "y": 99
+        },
+        {
+          "x": 261,
+          "y": 99
+        },
+        {
+          "x": 262,
+          "y": 99
+        },
+        {
+          "x": 263,
+          "y": 99
+        },
+        {
+          "x": 264,
+          "y": 99
+        },
+        {
+          "x": 265,
+          "y": 99
+        },
+        {
+          "x": 266,
+          "y": 99
+        },
+        {
+          "x": 267,
+          "y": 99
+        },
+        {
+          "x": 268,
+          "y": 99
+        },
+        {
+          "x": 269,
+          "y": 99
+        }
+      ],
+      "category": "レディスファッション",
+      "timestamp": "2025-08-11 14:44:03"
+    },
+    {
+      "store_name": "ラグナムーン",
+      "input_point": [
+        200,
+        250
+      ],
+      "center_point": {
+        "x": 214,
+        "y": 232
+      },
+      "bounding_box": {
+        "x": 172,
+        "y": 168,
+        "width": 89,
+        "height": 124
+      },
+      "mask_area": 10298,
+      "boundary_points_count": 434,
+      "confidence_score": 0.8544954061508179,
+      "mask_coordinates_sample": [
+        {
+          "x": 175,
+          "y": 168
+        },
+        {
+          "x": 176,
+          "y": 168
+        },
+        {
+          "x": 177,
+          "y": 168
+        },
+        {
+          "x": 178,
+          "y": 168
+        },
+        {
+          "x": 179,
+          "y": 168
+        },
+        {
+          "x": 180,
+          "y": 168
+        },
+        {
+          "x": 181,
+          "y": 168
+        },
+        {
+          "x": 182,
+          "y": 168
+        },
+        {
+          "x": 183,
+          "y": 168
+        },
+        {
+          "x": 184,
+          "y": 168
+        }
+      ],
+      "boundary_points_sample": [
+        {
+          "x": 175,
+          "y": 168
+        },
+        {
+          "x": 176,
+          "y": 168
+        },
+        {
+          "x": 177,
+          "y": 168
+        },
+        {
+          "x": 178,
+          "y": 168
+        },
+        {
+          "x": 179,
+          "y": 168
+        },
+        {
+          "x": 180,
+          "y": 168
+        },
+        {
+          "x": 181,
+          "y": 168
+        },
+        {
+          "x": 182,
+          "y": 168
+        },
+        {
+          "x": 183,
+          "y": 168
+        },
+        {
+          "x": 184,
+          "y": 168
+        }
+      ],
+      "category": "レディスファッション",
+      "timestamp": "2025-08-11 14:44:09"
+    },
+    {
+      "store_name": "アニエスベー",
+      "input_point": [
+        400,
+        200
+      ],
+      "center_point": {
+        "x": 440,
+        "y": 161
+      },
+      "bounding_box": {
+        "x": 387,
+        "y": 100,
+        "width": 107,
+        "height": 124
+      },
+      "mask_area": 12916,
+      "boundary_points_count": 486,
+      "confidence_score": 0.9971082210540771,
+      "mask_coordinates_sample": [
+        {
+          "x": 389,
+          "y": 100
+        },
+        {
+          "x": 390,
+          "y": 100
+        },
+        {
+          "x": 391,
+          "y": 100
+        },
+        {
+          "x": 392,
+          "y": 100
+        },
+        {
+          "x": 393,
+          "y": 100
+        },
+        {
+          "x": 394,
+          "y": 100
+        },
+        {
+          "x": 395,
+          "y": 100
+        },
+        {
+          "x": 396,
+          "y": 100
+        },
+        {
+          "x": 397,
+          "y": 100
+        },
+        {
+          "x": 398,
+          "y": 100
+        }
+      ],
+      "boundary_points_sample": [
+        {
+          "x": 389,
+          "y": 100
+        },
+        {
+          "x": 390,
+          "y": 100
+        },
+        {
+          "x": 391,
+          "y": 100
+        },
+        {
+          "x": 392,
+          "y": 100
+        },
+        {
+          "x": 393,
+          "y": 100
+        },
+        {
+          "x": 394,
+          "y": 100
+        },
+        {
+          "x": 395,
+          "y": 100
+        },
+        {
+          "x": 396,
+          "y": 100
+        },
+        {
+          "x": 397,
+          "y": 100
+        },
+        {
+          "x": 398,
+          "y": 100
+        }
+      ],
+      "category": "レディスファッション",
+      "timestamp": "2025-08-11 14:44:16"
+    }
+  ],
+  "feature_validation": {
+    "coordinate_data_extraction": true,
+    "center_point_calculation": true,
+    "mask_coordinates_extraction": true,
+    "boundary_points_detection": true,
+    "bounding_box_calculation": true,
+    "store_name_detection": true,
+    "category_classification": true,
+    "confidence_scoring": true
+  }
+}
