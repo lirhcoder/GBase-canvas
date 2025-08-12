@@ -1,5 +1,5 @@
 import React from 'react';
-import { MousePointer2, Square, Hexagon, Bot, Zap, Download } from 'lucide-react';
+import { MousePointer2, Square, Hexagon, Bot, Zap, Download, Upload, Save, FolderOpen } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 
 export const SimpleToolbar: React.FC = () => {
@@ -73,6 +73,112 @@ export const SimpleToolbar: React.FC = () => {
     console.log('✅ JSON数据已导出:', exportData);
   }, [annotations]);
 
+  // 图片上传处理
+  const handleImageUpload = React.useCallback(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imageUrl = event.target?.result as string;
+          // 创建图片对象来获取尺寸
+          const img = new Image();
+          img.onload = () => {
+            // 更新应用状态中的地图配置
+            useAppStore.getState().setMapConfig({
+              imageUrl: imageUrl,
+              dimensions: { width: img.width, height: img.height },
+              scale: 1,
+              offset: { x: 0, y: 0 },
+              metadata: {
+                facility_name: file.name.replace(/\.[^/.]+$/, ""),
+                floor_level: '1F',
+                created_date: new Date().toISOString()
+              }
+            });
+            // 清除之前的标注
+            useAppStore.getState().clearAllAnnotations();
+            console.log('✅ 图片上传成功:', file.name);
+          };
+          img.src = imageUrl;
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
+  }, []);
+
+  // 保存项目处理
+  const handleSaveProject = React.useCallback(() => {
+    const state = useAppStore.getState();
+    const projectData = {
+      timestamp: new Date().toISOString(),
+      map: {
+        config: state.map.config,
+        annotations: state.map.annotations
+      },
+      metadata: {
+        version: '2.0',
+        tool: 'FloorMap AI'
+      }
+    };
+
+    const dataStr = JSON.stringify(projectData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    const fileName = state.map.config?.metadata?.facility_name || 'floormap-project';
+    link.download = `${fileName}-${new Date().toISOString().slice(0, 16)}.floormap`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    console.log('✅ 项目已保存:', projectData);
+  }, []);
+
+  // 加载项目处理
+  const handleLoadProject = React.useCallback(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.floormap,.json';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const projectData = JSON.parse(event.target?.result as string);
+            
+            // 验证项目数据格式
+            if (projectData.map && projectData.map.config) {
+              // 加载地图配置
+              useAppStore.getState().setMapConfig(projectData.map.config);
+              
+              // 加载标注数据
+              if (projectData.map.annotations) {
+                useAppStore.getState().importAnnotations(projectData.map.annotations);
+              }
+              
+              console.log('✅ 项目加载成功:', file.name);
+            } else {
+              console.error('❌ 无效的项目文件格式');
+            }
+          } catch (error) {
+            console.error('❌ 项目文件解析失败:', error);
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
+  }, []);
+
   // 监听导出JSON事件
   React.useEffect(() => {
     const handleExportEvent = () => {
@@ -116,6 +222,34 @@ export const SimpleToolbar: React.FC = () => {
       })}
       
       <div className="w-px h-6 bg-gray-300 mx-2"></div>
+      
+      {/* 图片上传按钮 */}
+      <button 
+        onClick={handleImageUpload}
+        className="p-2 rounded transition-colors bg-blue-500 text-white hover:bg-blue-600 shadow-md"
+        title="Upload Image (Ctrl+U)"
+      >
+        <Upload className="w-4 h-4" />
+      </button>
+      
+      {/* 保存项目按钮 */}
+      <button 
+        onClick={handleSaveProject}
+        className="p-2 rounded transition-colors bg-orange-500 text-white hover:bg-orange-600 shadow-md"
+        title="Save Project (Ctrl+S)"
+        disabled={annotations.length === 0}
+      >
+        <Save className="w-4 h-4" />
+      </button>
+      
+      {/* 加载项目按钮 */}
+      <button 
+        onClick={handleLoadProject}
+        className="p-2 rounded transition-colors bg-cyan-500 text-white hover:bg-cyan-600 shadow-md"
+        title="Load Project (Ctrl+L)"
+      >
+        <FolderOpen className="w-4 h-4" />
+      </button>
       
       {/* 自动检测按钮 */}
       <button 

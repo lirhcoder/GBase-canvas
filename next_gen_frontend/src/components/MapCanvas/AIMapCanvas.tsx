@@ -21,6 +21,8 @@ export const AIMapCanvas: React.FC<AIMapCanvasProps> = ({
   height,
   className
 }) => {
+  // Get map config from store to support dynamic image loading
+  const mapConfig = useAppStore(state => state.map.config);
   // State and refs
   const stageRef = useRef<any>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -44,6 +46,9 @@ export const AIMapCanvas: React.FC<AIMapCanvasProps> = ({
       setLoading(true);
       
       try {
+        // Use image from map config if available, otherwise use prop
+        const currentImageUrl = mapConfig?.imageUrl || imageUrl;
+        
         // 1. Load the image
         const img = new window.Image();
         img.crossOrigin = 'anonymous';
@@ -54,13 +59,14 @@ export const AIMapCanvas: React.FC<AIMapCanvasProps> = ({
             resolve();
           };
           img.onerror = () => reject(new Error('Failed to load map image'));
-          img.src = imageUrl;
+          img.src = currentImageUrl;
         });
         
         console.log('🖼️ Image loaded successfully');
         
         // 2. Initialize SAM with the image
-        const imageName = imageUrl.split('/').pop() || 'lumine-yurakucho.png';
+        const currentImageUrl = mapConfig?.imageUrl || imageUrl;
+        const imageName = currentImageUrl.split('/').pop() || 'lumine-yurakucho.png';
         const initResponse = await fetch('/api/init', {
           method: 'POST',
           headers: {
@@ -88,7 +94,7 @@ export const AIMapCanvas: React.FC<AIMapCanvasProps> = ({
     };
     
     initImageAndSAM();
-  }, [imageUrl, setLoading, setError]);
+  }, [imageUrl, mapConfig?.imageUrl, setLoading, setError]);
 
   // AI prediction handler
   const handleAIPrediction = useCallback(async (point: Point) => {
